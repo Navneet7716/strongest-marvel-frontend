@@ -1,0 +1,16 @@
+.NavbarRight {
+    display: flex;
+    gap: .5rem;
+    align-items: center;
+    flex-direction: row;
+    justify-content: center;
+}
+
+
+.Navbar {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: .7rem;
+}
