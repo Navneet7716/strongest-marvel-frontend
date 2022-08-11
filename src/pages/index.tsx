@@ -176,7 +176,7 @@ const Home: NextPage = (props: any) => {
   )
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
 
   let first = getRandomNumber();
   let second = getRandomNumber();
