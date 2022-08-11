@@ -39,7 +39,7 @@ export default function ResultPage(props: any) {
                         return difference;
                     })
                     .map((character: any) => {
-                        return (<Paper shadow="xs" p="md" withBorder>
+                        return (<Paper shadow="xs" p="md" withBorder key={character.id}>
                             <div style={{
                                 display: "flex",
                                 flexDirection: "row",
