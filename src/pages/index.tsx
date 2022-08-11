@@ -8,6 +8,7 @@ import getRandomNumber from '../utils/getRandomNumber';
 import { Badge, Button, Card, Center, Container, Group, Skeleton, Space, Text } from '@mantine/core';
 import React from 'react';
 import { useMediaQuery } from '@mantine/hooks';
+import Head from 'next/head';
 
 const Home: NextPage = (props: any) => {
 
@@ -50,7 +51,7 @@ const Home: NextPage = (props: any) => {
 
   }
 
-  
+
   if (loading) {
     // return loading transition element
     return (
@@ -68,13 +69,13 @@ const Home: NextPage = (props: any) => {
                 <Card.Section>
                   <Center >
 
-                    <Skeleton visible={loading} animate={true} height={350} width={ 350}>
+                    <Skeleton visible={loading} animate={true} height={350} width={350}>
                     </Skeleton>
                   </Center>
                 </Card.Section>
 
                 <Group position="center" mt="md" mb="xs">
-                  <Skeleton visible={loading} animate={true} height={30} width={ 350}>
+                  <Skeleton visible={loading} animate={true} height={30} width={350}>
                   </Skeleton>
                 </Group>
                 <Center>
@@ -92,10 +93,10 @@ const Home: NextPage = (props: any) => {
               <Card shadow="sm" p="lg" radius="md" withBorder style={{}}>
                 <Card.Section>
                   <Center >
-                  <Skeleton visible={loading} animate={true} height={350} width={350}>
+                    <Skeleton visible={loading} animate={true} height={350} width={350}>
 
-                  </Skeleton>
-                    </Center>
+                    </Skeleton>
+                  </Center>
                 </Card.Section>
 
                 <Group position="center" mt="md" mb="xs">
@@ -103,8 +104,8 @@ const Home: NextPage = (props: any) => {
                   </Skeleton>
                 </Group>
                 <Center>
-                <Skeleton visible={loading} animate={true} height={30} width={200}>
-                </Skeleton>
+                  <Skeleton visible={loading} animate={true} height={30} width={200}>
+                  </Skeleton>
                 </Center>
               </Card>
             </div>
@@ -113,7 +114,7 @@ const Home: NextPage = (props: any) => {
 
         </Container>
         <Space h="lg" />
-        
+
 
       </>
     )
@@ -123,6 +124,17 @@ const Home: NextPage = (props: any) => {
 
   return (
     <>
+
+      <Head>
+
+        <title>Who is the strongest?</title>
+        <meta charSet="UTF-8" />
+        <meta name="description" content={`Who is more stronger marvel amongst ${char1.name} and ${char2.name}?`} />
+        <meta name="keywords" content="Marvel, strong, compare" />
+        <meta name="author" content="Navneet Singh" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
+
+      </Head>
 
       <Container>
 

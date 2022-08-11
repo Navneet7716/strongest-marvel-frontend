@@ -1,6 +1,7 @@
 import { Alert, Paper, Space, Text } from "@mantine/core";
 import { IconAlertCircle } from "@tabler/icons";
 import axios from "axios";
+import Head from "next/head";
 import Image from "next/image";
 
 import styles from "../../styles/Home.module.css";
@@ -18,67 +19,81 @@ const generateCountPercent = (character: any) => {
 export default function ResultPage(props: any) {
 
     return (
-        <div className={styles.resultsMain}>
-            <Alert icon={<IconAlertCircle size={16} />} mt={10} title="Info!" radius="md" variant="light">
-               This page updates every 5 minutes.
-            </Alert>
+        <>
 
-            <h1 className={styles.title}>Results</h1>
+            <Head>
 
-            <div className={styles.resultList}>
+                <title>Results</title>
+                <meta charSet="UTF-8" />
+                <meta name="description" content={`Results of the voting`} />
+                <meta name="keywords" content="Marvel, strong, compare" />
+                <meta name="author" content="Navneet Singh" />
+                <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
 
-                {props.character
-                    .sort((a: any, b: any) => {
-                        const difference =
-                            generateCountPercent(b) - generateCountPercent(a);
+            </Head>
 
-                        if (difference === 0) {
-                            return b._count.VoteFor - a._count.VoteFor;
-                        }
+            <div className={styles.resultsMain}>
+                <Alert icon={<IconAlertCircle size={16} />} mt={10} title="Info!" radius="md" variant="light">
+                    This page updates every 5 minutes.
+                </Alert>
 
-                        return difference;
-                    })
-                    .map((character: any) => {
-                        return (<Paper shadow="xs" p="md" withBorder key={character.id}>
-                            <div style={{
-                                display: "flex",
-                                flexDirection: "row",
-                                justifyContent: "space-between",
-                                alignItems: "center",
-                                gap: "1rem",
-                                width: "60vw"
-                            }}>
+                <h1 className={styles.title}>Results</h1>
 
+                <div className={styles.resultList}>
 
+                    {props.character
+                        .sort((a: any, b: any) => {
+                            const difference =
+                                generateCountPercent(b) - generateCountPercent(a);
+
+                            if (difference === 0) {
+                                return b._count.VoteFor - a._count.VoteFor;
+                            }
+
+                            return difference;
+                        })
+                        .map((character: any) => {
+                            return (<Paper shadow="xs" p="md" withBorder key={character.id}>
                                 <div style={{
                                     display: "flex",
                                     flexDirection: "row",
-                                    justifyContent: "center",
+                                    justifyContent: "space-between",
                                     alignItems: "center",
                                     gap: "1rem",
+                                    width: "60vw"
                                 }}>
-                                    <Image src={character.image} height={100} width={100} />
-                                    <Text>{character.name}</Text>
+
+
+                                    <div style={{
+                                        display: "flex",
+                                        flexDirection: "row",
+                                        justifyContent: "center",
+                                        alignItems: "center",
+                                        gap: "1rem",
+                                    }}>
+                                        <Image src={character.image} height={100} width={100} />
+                                        <Text>{character.name}</Text>
+                                    </div>
+                                    <div style={{
+                                        display: "flex",
+                                        flexDirection: "row",
+                                        justifyContent: "center",
+                                        alignItems: "center",
+                                    }}>
+                                        <Text> {generateCountPercent(character).toFixed(2) + "%"}</Text>
+                                    </div>
                                 </div>
-                                <div style={{
-                                    display: "flex",
-                                    flexDirection: "row",
-                                    justifyContent: "center",
-                                    alignItems: "center",
-                                }}>
-                                    <Text> {generateCountPercent(character).toFixed(2) + "%"}</Text>
-                                </div>
-                            </div>
-                        </Paper>)
-                    })}
+                            </Paper>)
+                        })}
+
+                </div>
+                <Space h="xl" />
+                <Space h="xl" />
+                <Space h="xl" />
+                <Space h="xl" />
 
             </div>
-            <Space h="xl" />
-            <Space h="xl" />
-            <Space h="xl" />
-            <Space h="xl" />
-
-        </div>
+        </>
     );
 }
 
