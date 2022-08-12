@@ -12,6 +12,8 @@ import Head from 'next/head';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { IconAlertCircle } from '@tabler/icons';
 
+import { motion, AnimatePresence } from "framer-motion"
+
 const Home: NextPage = () => {
 
   let { isLoading, error, data } = useQuery<any>(["get-character"], async () => {
@@ -61,58 +63,24 @@ const Home: NextPage = () => {
   if (isLoading || mutation.isLoading) {
     return (
       <>
-        <Container>
-          <h1 className={styles.title}>
-            Who is the strongest?
-          </h1>
+        <Container className={styles.loadingContainer}>
 
-          <div className={!matches ? styles.mainDiv : styles.mobMainDiv}>
-            <div>
-              <Card shadow="sm" p="lg" radius="md" withBorder>
-                <Card.Section>
-                  <Center >
-
-                    <Skeleton visible={isLoading || mutation.isLoading} animate={true} height={350} width={350}>
-                    </Skeleton>
-                  </Center>
-                </Card.Section>
-
-                <Group position="center" mt="md" mb="xs">
-                  <Skeleton visible={isLoading || mutation.isLoading} animate={true} height={30} width={350}>
-                  </Skeleton>
-                </Group>
-                <Center>
-
-                  <Skeleton visible={isLoading || mutation.isLoading} animate={true} height={30} width={200}>
-                  </Skeleton>
-                </Center>
-              </Card>
-
-            </div>
-            <div>
-              <h1 className={styles.title}>vs</h1>
-            </div>
-            <div>
-              <Card shadow="sm" p="lg" radius="md" withBorder style={{}}>
-                <Card.Section>
-                  <Center >
-                    <Skeleton visible={isLoading || mutation.isLoading} animate={true} height={350} width={350}>
-
-                    </Skeleton>
-                  </Center>
-                </Card.Section>
-
-                <Group position="center" mt="md" mb="xs">
-                  <Skeleton visible={isLoading || mutation.isLoading} animate={true} height={30} width={350}>
-                  </Skeleton>
-                </Group>
-                <Center>
-                  <Skeleton visible={isLoading || mutation.isLoading} animate={true} height={30} width={200}>
-                  </Skeleton>
-                </Center>
-              </Card>
-            </div>
-          </div>
+          <motion.div
+            className={styles.box}
+            animate={{
+              scale: [1, 2, 2, 1, 1],
+              rotate: [0, 0, 180, 180, 0],
+              borderRadius: ["0%", "0%", "50%", "50%", "0%"]
+            }}
+            transition={{
+              duration: 2,
+              ease: "easeInOut",
+              times: [0, 0.2, 0.5, 0.8, 1],
+              repeat: Infinity,
+              repeatDelay: 1
+            }}
+          > 
+          </motion.div>
         </Container>
         <Space h="lg" />
       </>
@@ -136,41 +104,67 @@ const Home: NextPage = () => {
         <h1 className={styles.title}>
           Who is the strongest?
         </h1>
-        <div className={!matches ? styles.mainDiv : styles.mobMainDiv}>
-          <div>
-            <Card shadow="sm" p="lg" radius="md" withBorder>
-              <Card.Section>
-                <Image src={data!.char1.image} alt="hero image" width={350} height={350} className={styles.image} />
-              </Card.Section>
 
-              <Group position="center" mt="md" mb="xs">
-                <Text weight={500}>{data!.char1.name}</Text>
-              </Group>
+        <AnimatePresence>
 
-              <Button onClick={() => mutation.mutate({ voteFor: data!.char1.id, voteAgainst: data!.char2.id })} variant="light" color="green" fullWidth mt="md" radius="md">
-                Stronger
-              </Button>
-            </Card>
-          </div>
-          <div>
-            <h1 className={styles.title}>vs</h1>
-          </div>
-          <div>
-            <Card shadow="sm" p="lg" radius="md" withBorder>
-              <Card.Section>
-                <Image src={data.char2.image} alt="hero image" width={350} height={350} className={styles.image} />
-              </Card.Section>
+          {!isLoading && !mutation.isLoading &&
+            <motion.div
+              initial={{ opacity: 0, scale: 0.5 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5 }}
+              exit={{ opacity: 1, scale: 0.5 }}
+              className={!matches ? styles.mainDiv : styles.mobMainDiv}>
 
-              <Group position="center" mt="md" mb="xs">
-                <Text weight={500}>{data.char2.name}</Text>
-              </Group>
+              <motion.div
+                whileHover={{
+                  scale: 1.05,
+                  transition: { duration: .2 },
+                }}
+              >
 
-              <Button onClick={() => mutation.mutate({ voteFor: data!.char2.id, voteAgainst: data!.char1.id })} variant="light" color="green" fullWidth mt="md" radius="md">
-                Stronger
-              </Button>
-            </Card>
-          </div>
-        </div>
+                <Card shadow="sm" p="lg" radius="md" withBorder>
+                  <Card.Section>
+                    <Image src={data!.char1.image} alt="hero image" width={350} height={350} className={styles.image} />
+                  </Card.Section>
+
+                  <Group position="center" mt="md" mb="xs">
+                    <Text weight={500}>{data!.char1.name}</Text>
+                  </Group>
+                  <motion.div whileTap={{ scale: 0.9 }}>
+                    <Button onClick={() => mutation.mutate({ voteFor: data!.char1.id, voteAgainst: data!.char2.id })} variant="light" color="green" fullWidth mt="md" radius="md">
+                      Stronger
+                    </Button>
+                  </motion.div>
+                </Card>
+              </motion.div>
+              <div>
+                <h1 className={styles.title}>vs</h1>
+              </div>
+              <motion.div
+                whileHover={{
+                  scale: 1.05,
+                  transition: { duration: .2 },
+                }}
+              >
+                <Card shadow="sm" p="lg" radius="md" withBorder>
+                  <Card.Section>
+                    <Image src={data.char2.image} alt="hero image" width={350} height={350} className={styles.image} />
+                  </Card.Section>
+
+                  <Group position="center" mt="md" mb="xs">
+                    <Text weight={500}>{data.char2.name}</Text>
+                  </Group>
+                  <motion.div whileTap={{ scale: 0.9 }}>
+
+                    <Button onClick={() => mutation.mutate({ voteFor: data!.char2.id, voteAgainst: data!.char1.id })} variant="light" color="green" fullWidth mt="md" radius="md">
+                      Stronger
+                    </Button>
+                  </motion.div>
+                </Card>
+              </motion.div>
+            </motion.div>
+          }
+        </AnimatePresence>
 
 
       </Container>
