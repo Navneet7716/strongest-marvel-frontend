@@ -1,4 +1,4 @@
-import { Alert, Paper, Space, Text } from "@mantine/core";
+import { Alert, Badge, Paper, Space, Text } from "@mantine/core";
 import { IconAlertCircle } from "@tabler/icons";
 import axios from "axios";
 import Head from "next/head";
@@ -52,15 +52,18 @@ export default function ResultPage(props: any) {
 
                             return difference;
                         })
-                        .map((character: any) => {
-                            return (<Paper shadow="xs" p="md" withBorder key={character.id}>
+                        .map((character: any, index: number) => {
+                            return (<Paper shadow="xs" withBorder key={character.id}>
+
+                                <Badge variant="light" color={index + 1 == 1 ? "yellow" : index + 1 == 2 ? "blue" : index + 1 == 3 ? "grape" : "dark"}>{index + 1}</Badge>
                                 <div style={{
                                     display: "flex",
                                     flexDirection: "row",
                                     justifyContent: "space-between",
                                     alignItems: "center",
                                     gap: "1rem",
-                                    width: "60vw"
+                                    width: "60vw",
+                                    padding: "1rem"
                                 }}>
 
 
